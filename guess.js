@@ -107,6 +107,7 @@ restartBtn.addEventListener("click", () => {
   setTimeout(() => {
     historyList.innerHTML = ``;
   }, 500);
+  result.length = 0;tsun-yu.github.io
   getAns();
   history.length = 0;
 });
