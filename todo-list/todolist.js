@@ -56,13 +56,15 @@ const display = () => {
   const displayTodolist = todos.map((value) => {
     let displayTodolistTmp = "";
     displayTodolistTmp = value.edit
-      ? `<li><input id="editInput" type="text" value="${value.text}"/>
+      ? `<li>
+      <input id="editInput" type="text" value="${value.text}"/>
       <button class="btn btn-primary saveBtn" id="${value.id}">save</button>
       <button class="btn btn-primary completedBtn" id="${value.id}">completed</button>
       <button class="btn btn-primary deleteBtn" id="${value.id}">delete</button>
       </li>`
       : value.completed
-      ? `<li><del>${value.text}</del>
+      ? `<li>
+      <del>${value.text}</del>
       <button class="btn btn-primary editBtn" id="${value.id}">edit</button>
       <button class="btn btn-primary completedBtn" id="${value.id}">completed</button>
       <button class="btn btn-primary deleteBtn" id="${value.id}">delete</button>
@@ -98,12 +100,12 @@ const display = () => {
     element.addEventListener("click", (e) => {
       editToggle(e.target.id);
       display();
-      document.querySelector("#editInput").addEventListener("keypress", (e) => {
-        if (e.key === "Enter") {
-          saveItem(e.target.id);
-          display();
-        }
-      });
+      // document.querySelector("#editInput").addEventListener("keypress", (e) => {
+      //   e.key === "Enter" &&
+      //     console.log("success") &&
+      //     saveItem(e.target.id) &&
+      //     display();
+      // });
     });
   });
   //儲存按鈕事件
