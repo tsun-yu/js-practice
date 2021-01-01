@@ -25,8 +25,6 @@ const getDataFromServer = async () => {
     const response = await fetch(" http://localhost:3000/counter/1");
     if (!response.ok) throw new Error("somthing wrong");
     const data = await response.json();
-    // console.log("response", response);
-    // console.log("data", data);
     slr("#total").innerHTML = data.total;
   } catch (error) {
     console.log(error);
@@ -45,9 +43,6 @@ const putDataFromServer = async (total) => {
       body: JSON.stringify(newData),
     });
     if (!response.ok) throw new Error("somthing wrong");
-    // console.log("newData", newData);
-    // console.log("JSON.stringify(newData)", JSON.stringify(newData));
-    // const data = await response.json();
   } catch (error) {
     console.log(error);
   }
