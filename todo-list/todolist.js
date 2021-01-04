@@ -4,7 +4,12 @@ const sendBtn = slr("#send");
 const input = slr("#input");
 const todolist = slr("#todolist");
 const editInput = slr("#editInput");
-const completedBtn = document.querySelectorAll(".completedBtn");
+
+const addEvent4Btns = (selector, eventType, func) => {
+  document.querySelectorAll(selector).forEach((element) => {
+    element.addEventListener(eventType, (e) => func(e));
+  });
+};
 
 //存放代辦事項arr
 // {id:number , text:string, completed:false}
@@ -17,13 +22,15 @@ let todos = [
 //新增代辦事項至todos陣列中
 const addTodo = () => {
   // {id:number , text:string, completed:false, edit:false}
-  const todosItems = {
-    id: +new Date(),
-    text: input.value,
-    completed: false,
-    edit: false,
-  };
-  todos.unshift(todosItems);
+  if (input.value.trim()) {
+    const todosItems = {
+      id: +new Date(),
+      text: input.value,
+      completed: false,
+      edit: false,
+    };
+    todos.unshift(todosItems);
+  }
   input.value = ``;
 };
 
@@ -80,6 +87,8 @@ const display = () => {
 
   todolist.innerHTML = displayTodolist.join("");
 
+  //以下為各按鈕事件
+  
   //完成按鈕事件
   document.querySelectorAll(".completedBtn").forEach((element) => {
     element.addEventListener("click", (e) => {
@@ -89,31 +98,27 @@ const display = () => {
   });
 
   //刪除按鈕事件
-  document.querySelectorAll(".deleteBtn").forEach((element) => {
-    element.addEventListener("click", (e) => {
-      deleteItem(e.target.id);
-      display();
-    });
+  addEvent4Btns(".deleteBtn", "click", (e) => {
+    deleteItem(e.target.id);
+    display();
   });
+
   //編輯按鈕事件
-  document.querySelectorAll(".editBtn").forEach((element) => {
-    element.addEventListener("click", (e) => {
-      editToggle(e.target.id);
-      display();
-      // document.querySelector("#editInput").addEventListener("keypress", (e) => {
-      //   e.key === "Enter" &&
-      //     console.log("success") &&
-      //     saveItem(e.target.id) &&
-      //     display();
-      // });
+  addEvent4Btns(".editBtn", "click", (e) => {
+    const itemId = e.target.id;
+    editToggle(e.target.id);
+    display();
+    document.querySelector("#editInput").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        saveItem(itemId);
+        display();
+      }
     });
   });
   //儲存按鈕事件
-  document.querySelectorAll(".saveBtn").forEach((element) => {
-    element.addEventListener("click", (e) => {
-      saveItem(e.target.id);
-      display();
-    });
+  addEvent4Btns(".saveBtn", "click", (e) => {
+    saveItem(e.target.id);
+    display();
   });
 };
 
