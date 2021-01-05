@@ -36,10 +36,12 @@ const addTodo = () => {
 };
 
 //切換是否已完成
-const completedToggle = (id) =>
+const completedToggle = (id) => {
   todos.forEach((v) => {
     v.id == +id && (v.completed = !v.completed);
   });
+  localStorage.setItem("todos", JSON.stringify(todos));
+};
 //刪除代辦事項
 const deleteItem = (id) => {
   todos = todos.filter((v) => v.id !== +id);
