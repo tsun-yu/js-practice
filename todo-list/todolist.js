@@ -14,9 +14,8 @@ const addEvent4Btns = (selector, eventType, func) => {
 //存放代辦事項arr
 // {id:number , text:string, completed:false}
 let todos = [
-  //預設
-  { id: 111, text: "複習react", completed: false, edit: false },
-  { id: 222, text: "練習js", completed: true, edit: false },
+  // { "id": 111, text: "複習react", "completed": false, "edit": false },
+  // { "id": 222, text: "練習js", "completed": true, "edit": false }
 ];
 
 //新增代辦事項至todos陣列中
@@ -32,6 +31,8 @@ const addTodo = () => {
     todos.unshift(todosItems);
   }
   input.value = ``;
+
+  localStorage.setItem("todos", JSON.stringify(todos));
 };
 
 //切換是否已完成
@@ -42,7 +43,7 @@ const completedToggle = (id) =>
 //刪除代辦事項
 const deleteItem = (id) => {
   todos = todos.filter((v) => v.id !== +id);
-  // todos = [...newTodos];
+  localStorage.setItem("todos", JSON.stringify(todos));
 };
 //切換編輯狀態
 const editToggle = (id) =>
@@ -51,12 +52,14 @@ const editToggle = (id) =>
     v.id == +id && (v.edit = !v.edit);
   });
 //儲存已編輯
-const saveItem = (id) =>
+const saveItem = (id) => {
   todos.forEach((v) => {
     v.id == +id &&
       (v.text = document.querySelector("#editInput").value) &&
       (v.edit = false);
   });
+  localStorage.setItem("todos", JSON.stringify(todos));
+};
 
 //呈現畫面
 const display = () => {
@@ -88,7 +91,7 @@ const display = () => {
   todolist.innerHTML = displayTodolist.join("");
 
   //以下為各按鈕事件
-  
+
   //完成按鈕事件
   document.querySelectorAll(".completedBtn").forEach((element) => {
     element.addEventListener("click", (e) => {
@@ -134,4 +137,10 @@ input.addEventListener("keypress", (e) => {
   }
 });
 
-display();
+const initTodo = () => {
+  const newTodos = JSON.parse(localStorage.getItem("todos"));
+  todos = [...newTodos];
+  display();
+};
+
+initTodo();
