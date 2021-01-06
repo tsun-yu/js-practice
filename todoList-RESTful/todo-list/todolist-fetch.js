@@ -34,7 +34,7 @@ const getDataFromServer = async () => {
       }
     });
     todoItems.innerHTML = display.join("");
-    deleteBtnEvent()
+    deleteBtnEvent();
   } catch (error) {
     console.log(error);
   }
@@ -45,11 +45,11 @@ const postDataFromServer = async (todo) => {
   try {
     const response = await fetch(" http://localhost:3000/todos", {
       method: "POST",
+      body: JSON.stringify(todo),
       headers: new Headers({
         Accept: "application/json",
         "Content-Type": "application/json",
       }),
-      body: JSON.stringify(todo),
     });
     if (!response.ok) throw new Error("somthing wrong");
   } catch (error) {

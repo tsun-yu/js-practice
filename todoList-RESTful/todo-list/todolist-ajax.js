@@ -5,7 +5,7 @@ const todoInput = slr("#todoInput");
 const send = slr(".send");
 
 //get
-const getData = async () => {
+const getData = () => {
   const xhr = new XMLHttpRequest();
   xhr.open("get", "http://localhost:3000/todos");
   xhr.onload = () => {
@@ -19,7 +19,7 @@ const getData = async () => {
         <div class="todoContent">
           <div class="memo">${v.memo}</div>
           <div class="address">${v.address}</div>
-          <div class="time">memo created at: ${new Date(v.createdAt)}</div>
+          <div class="time">memo created at: ${(new Date(v.createdAt)).toLocaleDateString()}</div>
         </div>
       </div>`;
       } else {
@@ -28,7 +28,7 @@ const getData = async () => {
         <a href="##" class="delete" id=${v.id}>X</a>
         <div class="todoContent">
           <div class="memo">${v.memo}</div>
-          <div class="time">memo created at: ${new Date(v.createdAt)}</div>
+          <div class="time">memo created at: ${(new Date(v.createdAt)).toLocaleDateString()}</div>
         </div>
       </div>`;
       }
@@ -57,7 +57,7 @@ const deleteData = (id) => {
 //delete function
 const deleteBtnEvent = () => {
   document.querySelectorAll(".delete").forEach((element) =>
-    element.addEventListener("click", async (event) => {
+    element.addEventListener("click", async(event) => {
       await deleteData(event.target.id);
       await getData();
     })
@@ -95,3 +95,4 @@ send.addEventListener("click", () => {
 });
 
 getData();
+
