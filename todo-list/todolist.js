@@ -71,7 +71,6 @@ const display = () => {
       ? `<li class="d-flex">
         <div class="d-flex align-items-center px-2">
           <a
-            href="##"
             class="completedBtn d-flex align-items-center justify-content-center"
             id="${value.id}"
           >
@@ -85,7 +84,7 @@ const display = () => {
       ? `<li class="d-flex">
       <div class="d-flex align-items-center px-2">
         <a
-          href="##"
+          
           class="completedBtn d-flex align-items-center justify-content-center"
           id="${value.id}"
         >
@@ -93,10 +92,10 @@ const display = () => {
         </a>
         <div class="todoItem todoItemChecked"><del>${value.text}</del></div>
         <div class="editnDeleteBtns">
-          <a href="##" class="editBtn" >
+          <a  class="editBtn" >
             <i class="fas fa-pen" id="${value.id}"></i>
           </a>
-          <a href="##" class="deleteBtn" >
+          <a  class="deleteBtn" >
             <i class="fas fa-trash-alt" id="${value.id}"></i>
           </a>
         </div>
@@ -105,7 +104,7 @@ const display = () => {
       : `<li class="d-flex">
       <div class="d-flex align-items-center px-2">
         <a
-          href="##"
+          
           class="completedBtn d-flex align-items-center justify-content-center"
           id="${value.id}"
         >
@@ -113,10 +112,10 @@ const display = () => {
         </a>
         <div class="todoItem">${value.text}</div>
         <div class="editnDeleteBtns">
-          <a href="##" class="editBtn" >
+          <a  class="editBtn" >
             <i class="fas fa-pen" id="${value.id}"></i>
           </a>
-          <a href="##" class="deleteBtn" >
+          <a  class="deleteBtn" >
             <i class="fas fa-trash-alt " id="${value.id}"></i>
           </a>
         </div>
