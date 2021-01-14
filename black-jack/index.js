@@ -57,11 +57,11 @@ const slr = (name) => document.querySelector(name);
 let cardsPool = [];
 let cardsPlayer = [];
 let flag = 0;
-let total = 0;
+let aceNum = 0;
 
-//產生一副牌
+//產生一副牌函式
 const initCards = () => {
-  const suit = ["c", "s", "h", "d"];
+  const suit = ["c", "s", "d", "h"];
   const point = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
   for (i = 0; i < suit.length; i++) {
     for (j = 0; j < point.length; j++) {
@@ -70,7 +70,12 @@ const initCards = () => {
   }
 };
 
-//洗牌
+//呈現撲克牌函式
+const displayCard = (card) => {
+  slr("#cards").appendChild(card.toString());
+};
+
+//洗牌函式
 const shuffle = (a) => {
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -79,34 +84,61 @@ const shuffle = (a) => {
   return a;
 };
 
-//發牌
+//發牌函式
 const dispatch = () => {
-  displayCard(cardsPool[flag]);
-  cardsPlayer.push(cardsPool[flag]);
-  let totalTmp = 0;
-  cardsPool[flag].point > 10 && (cardsPool[flag].point = 10);
+  const newCard = cardsPool[flag];
+  displayCard(newCard);
+  cardsPlayer.push(newCard);
 
-  // cardsPlayer.map((v) => {
-  //   totalTmp < 21 && v.point == 1 && (v.point = 11);
-  //   totalTmp += v.point;
-  // });
-
-  total += cardsPool[flag].point;
-  console.log("totalTmp", totalTmp);
-  console.log("total", total);
-  slr("#total").innerHTML = total;
+  //JQK為10點 A為11點
+  if (newCard.point > 10) {
+    newCard.point = 10;
+  } else if (newCard.point == 1) {
+    newCard.point = 11;
+    aceNum++;
+  }
   flag++;
+};
+
+//計算點數函式
+const calc = () => {
+  let total = 0;
+  let aceNumTmp = aceNum;
+
+  cardsPlayer.forEach((v) => {
+    total += v.point;
+  });
+
+  if (total > 21) {
+    if (aceNumTmp != 0) {
+      for (let i = 0; i < aceNumTmp; i++) {
+        total -= 10;
+        if (total <= 21) {
+          slr("#total").innerHTML = total;
+          break;
+        } else {
+          slr("#total").innerHTML = "bust";
+        }
+      }
+    } else {
+      slr("#total").innerHTML = "bust";
+    }
+  } else {
+    slr("#total").innerHTML = total;
+  }
 };
 
 // const card = createCard("c", 11);
 // createCard(v.suit, v.point));
 // const card = new Card("h", 13);
 
+//產生一副牌
 initCards();
+//洗牌
 cardsPool = [...shuffle(cardsPool)];
 
-const displayCard = (card) => {
-  slr("#cards").appendChild(card.toString());
-};
-
-slr("#dispatch").addEventListener("click", () => dispatch());
+//發票按鈕事件
+slr("#dispatch").addEventListener("click", () => {
+  dispatch();
+  calc();
+});
